@@ -1,43 +1,61 @@
 // Returns the given value. Seems pointless perhaps but see its use below for providing a default, no-op callback.
 const identity = function(val) {
-  // Your code goes here
+  return val;
 };
 
 // Returns the first n elements of the given array.
 const first = function(array, n = 1) {
-  // Your code goes here
+  return n === 1 ? array[0] : array.slice(0, n)
 };
 
 // Returns the last n elements of the given array.
 const last = function(array, n = 1) {
-  // Your code goes here
+  return n === 1 ? array[array.length - 1] : array.slice(Math.max(0, array.length - n))
 };
 
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
 const indexOf = function(array, target, fromIndex=0) {
-  // Your code goes here
+  for (let index = fromIndex; index <= array.length; index++) {
+    if (array[index] === target) {
+      return index;
+    }
+  }
+  return -1;
 };
 
 const isArrayLike = function(obj) {
-  // Your code goes here
+  const length = obj['length'];
+  return typeof length === 'number' && length >= 0;
 };
 
 // The cornerstone of a functional library -- iterate all elements, pass each to a callback function.
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
 const each = function(obj, callback=identity) {
-  // Your code goes here
+  if (isArrayLike(obj)) {
+    for (let index = 0; index < obj.length; index++) {
+      callback(obj[index], index, obj);
+    }
+  } else {
+    for (let key in obj) {
+      callback(obj[key], key, obj);
+    }
+  }
 };
 
 // Return the results of applying the callback to each element.
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
 const map = function(obj, callback=identity) {
-  // Your code goes here
+  const results = [];
+  each(obj, (currentValue, currentIndexOrKey, obj) => {
+    result.push(callback(currentValue, currentIndexOrKey, obj));
+  });
+  return results
 };
 
 // Return an array of the values o a certain property in the collection.
 // E.g. given an array of people objects, return an array of just their ages.
 const pluck = function(obj, key) {
-  // Your code goes here
+  map(obj, item => item[key]);
 };
 
 // Reduces collection to a value which is the accumulated result of running
@@ -47,7 +65,17 @@ const pluck = function(obj, key) {
 // value. The callback is invoked with four arguments:
 // (accumulator, value, index|key, collection).
 const reduce = function(obj, callback=identity, initialValue) {
-  // Your code goes here
+  let accumulator = initialValue;
+  let initializing = accumulator === undefined;
+  each(obj, (currentValue, currentIndexOrKey, iteratedObj) => {
+    if (initializing) {
+    initializing = false;
+    accumulator = currentValue;
+    } else {
+      accumulator = callback(accumulator, currentValue, currentIndexOrKey, iteratedObj);
+    }
+  });
+  return accumulator;
 };
 
 // Return true if the object contains the target.
