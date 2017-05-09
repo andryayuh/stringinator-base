@@ -47,7 +47,7 @@ const each = function(obj, callback=identity) {
 const map = function(obj, callback=identity) {
   const results = [];
   each(obj, (currentValue, currentIndexOrKey, obj) => {
-    result.push(callback(currentValue, currentIndexOrKey, obj));
+    results.push(callback(currentValue, currentIndexOrKey, obj));
   });
   return results
 };
@@ -55,7 +55,7 @@ const map = function(obj, callback=identity) {
 // Return an array of the values o a certain property in the collection.
 // E.g. given an array of people objects, return an array of just their ages.
 const pluck = function(obj, key) {
-  map(obj, item => item[key]);
+  return map(obj, item => item[key]);
 };
 
 // Reduces collection to a value which is the accumulated result of running
