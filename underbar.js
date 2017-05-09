@@ -115,6 +115,7 @@ const reject = function(arr, callback=identity) {
   return filter(arr, item => !callback(item));
 };
 
+console.log(reject('andrea', target => target ==='a').join(''));
 // De-duplicates (de-dups) the elements / object values.
 const uniq = function(obj) {
   const foundItems = {};

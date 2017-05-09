@@ -1,29 +1,28 @@
 const _ = require('./underbar');
 
 const first = function(str, n) {
-  // Your code goes here
+  return _.first(str, n);
 };
 
 const last = function(str, n) {
-  // Your code goes here
+  return _.last(str, n);
 };
 
 const removeChar = function(str, target) {
-  // hint: use _.reject
-  // Your code goes here
+  return _.reject(str, x => x === target).join('');
 };
 
 const hasChar = function(str, target) {
   // hint: use _.some
-  // Your code goes here
+  return _.some(str, x => x === target);
 };
 
 const isOnlyDigits = function(str) {
-  // Your code goes here
+  return _.every(str, x => !isNaN(parseInt(x, 10)));
 };
 
 const filterToOnlyDigits = function(str) {
-  // Your code goes here
+  return _.filter(str, x => !isNaN(parseInt(x, 10))).join('');
 };
 
 const truncateString = function(val, maxLength) {
@@ -32,8 +31,7 @@ const truncateString = function(val, maxLength) {
 };
 
 const truncateLongItems = function(obj, maxLength) {
-  // hint: use truncateString above
-  // Your code goes here
+  return _.map(obj, value => truncateString(value, maxLength));
 };
 
 const countChars = function(str) {
