@@ -80,32 +80,47 @@ const reduce = function(obj, callback=identity, initialValue) {
 
 // Return true if the object contains the target.
 const contains = function(obj, target) {
-  // Your code goes here
+  return reduce(obj, (wasFound, item) => {
+    return wasFound || item === target;
+  }, false);
 };
 
 // Return true if all the elements / object values are accepted by the callback.
 const every = function(obj, callback=identity) {
-  // Your code goes here
+  return reduce(obj, (allPassed, item) => {
+    return allPassed && !!callback(item);
+  }, true);
 };
 
 // Return true if even 1 element / object value is accepted by the callback.
 const some = function(obj, callback=identity) {
-  // Your code goes here
+  return reduce(obj, (allPassed, item) => {
+    return allPassed|| !!callback(item);
+  }, false);
 };
 
 // Return an array with all elements / object values that are accepted by the callback.
 const filter = function(obj, callback=identity) {
-  // Your code goes here
+  const result = [];
+  each(obj, item => {
+    if (callback(item)) {
+      result.push(item);
+    }
+  });
+  return result;
 };
 
-// Return object without the elements / object valuesthat were rejected by the callback.
+// Return object without the elements / object values that were rejected by the callback.
 const reject = function(arr, callback=identity) {
-  // Your code goes here
+  return filter(arr, item => !callback(item));
 };
 
 // De-duplicates (de-dups) the elements / object values.
 const uniq = function(obj) {
-  // Your code goes here
+  const foundItems = {};
+  return filter(obj, item => {
+    return !(item in foundItems) && (foundItems[item] = true);
+  });
 };
 
 
